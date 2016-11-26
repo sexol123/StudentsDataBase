@@ -183,7 +183,7 @@ namespace Students
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Помилка збереження даних",
+                MessageBox.Show(ex.Message, "Ошибка сохранения дынных",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -199,7 +199,7 @@ namespace Students
         {
 
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Файли XML (*.xml)|*.xml";
+            dlg.Filter = "Фаилы XML (*.xml)|*.xml";
             if (dlg.ShowDialog() != DialogResult.OK)
             {
                 
