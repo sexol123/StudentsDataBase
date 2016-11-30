@@ -36,7 +36,9 @@ namespace Students
 
             InitializeComponent();
             liststudents1 = new BindingList<Student>();
+            
             dataGridView1.DataSource = liststudents1;
+            
 
 
 
@@ -49,7 +51,7 @@ namespace Students
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+           
         }
 
         private void btAddStud_Click(object sender, EventArgs e)
@@ -102,7 +104,7 @@ namespace Students
 
         private void dataGridView1_SelectionChanged_1(object sender, EventArgs e)
         {
-
+            
             btPrint.Enabled = dataGridView1.Rows.Count != 0;
             btRemStud.Enabled = dataGridView1.Rows.Count != 0;
             if (dataGridView1.SelectedRows.Count == 0)
@@ -111,6 +113,8 @@ namespace Students
                 return;
             }
             //btRemStud.Enabled = true;
+           
+            
             textBoxfio.Text = dataGridView1.SelectedCells[0].Value.ToString();
 
             textBoxadr.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
@@ -119,6 +123,9 @@ namespace Students
 
             textBoxstep.Text = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
             textBoxstep1.Text = dataGridView1.SelectedCells[3].Value.ToString();
+            pictureBoxMain.Image = (Image) dataGridView1.SelectedRows[0].Cells[4].Value;
+            // pictureBoxMain.Image = liststudents1[dataGridView1.SelectedRows[0].Index].photo;
+
 
 
         }
@@ -174,6 +181,7 @@ namespace Students
                     writer.WriteAttributeString("Adress", student.adres);
                     writer.WriteAttributeString("Age", student.age.ToString());
                     writer.WriteAttributeString("Name", student.FIO);
+                   
                     writer.WriteEndElement();
                    
                 }
@@ -225,8 +233,10 @@ namespace Students
                                 FIO = reader.GetAttribute("Name"),
                                 age = int.Parse(reader.GetAttribute("Age")),
                                 adres = reader.GetAttribute("Adress"),
-                                stepuha = int.Parse(reader.GetAttribute("Stipendia"))
+                                stepuha = int.Parse(reader.GetAttribute("Stipendia")),
+                                //experiment
                                 
+
                             };
                             
                             Liststudents1.Add(student);
@@ -265,6 +275,47 @@ namespace Students
             ClFild();
             liststudents1?.Clear();
             MessageBox.Show("Очищено","Список студентов",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+               
+        }
+
+        private void pictureBoxMain_MouseClick(object sender, MouseEventArgs e)
+        {
+           var msg = MessageBox.Show("Фото", "Изменить фото?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(DialogResult.No == msg )
+                return;
+            //FileName = null;
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Файлы изображений  (*.jpg)|*.jpg";
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            // ClFild();
+            FileName = dlg.FileName;
+
+            //pictureBoxMain.Image = Image.FromFile(FileName);
+
+            try
+            {
+                pictureBoxMain.Image = Image.FromFile(FileName);
+                dataGridView1.SelectedRows[0].Cells[4].Value = pictureBoxMain.Image;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка загрузки изображения",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
         }
     }
 }

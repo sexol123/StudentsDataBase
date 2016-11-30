@@ -63,7 +63,14 @@ namespace Students
                 return;
             }
             st.stepuha = stepuha;
-            
+            if (string.IsNullOrWhiteSpace(pictureBox1.Image.ToString()))
+            {
+                MessageBox.Show("Загрузите изображение", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            st.photo = pictureBox1.Image;
+            //pictureBoxMain 
+
                _liststudents.Add(st);
             ClFild();
             MessageBox.Show("Студент успешно добавлен", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -82,6 +89,38 @@ namespace Students
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void SetPhoto()
+        {
+            string FileName = null;
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Файлы изображений  (*.jpg)|*.jpg";
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            // ClFild();
+            FileName = dlg.FileName;
+            pictureBox1.Invalidate();
+            pictureBox1.Image = Image.FromFile(FileName);
+
+            try
+            {
+                pictureBox1.Image = Image.FromFile(FileName);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка загрузки изображения",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void btaddphoto_Click(object sender, EventArgs e)
+        {
+           
+           SetPhoto();
         }
     }
 }
