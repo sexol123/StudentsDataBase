@@ -151,10 +151,15 @@ namespace Students
 
         }
 
+        public void SavP()
+        {
+           
+        }
+
         private void btPrint_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
+            
             //saveFileDialog1.Filter = "SData files (*.SData)|*.SData|All files (*.*)|*.*";
             saveFileDialog1.Filter = "Файли XML (*.xml)|*.xml";
             saveFileDialog1.RestoreDirectory = true;
@@ -181,9 +186,17 @@ namespace Students
                     writer.WriteAttributeString("Adress", student.adres);
                     writer.WriteAttributeString("Age", student.age.ToString());
                     writer.WriteAttributeString("Name", student.FIO);
-                   
+                    //=-----------------------
+                   // Bitmap bmp = new Bitmap(student.photo);
+                    //TypeConverter converter = TypeDescriptor.GetConverter(typeof(Bitmap));
+                    //string image = Convert.ToBase64String((byte[])converter.ConvertTo(student.photo, typeof(byte[])));
+                    //writer.WriteAttributeString("Photo", image);
+
+
+                    //--------------
                     writer.WriteEndElement();
-                   
+                  
+
                 }
                 writer.WriteEndElement();
                 writer.WriteEndElement();
@@ -289,7 +302,7 @@ namespace Students
 
         private void pictureBoxMain_MouseClick(object sender, MouseEventArgs e)
         {
-           var msg = MessageBox.Show("Фото", "Изменить фото?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+           var msg = MessageBox.Show("Изменить фото?","Фото" , MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(DialogResult.No == msg )
                 return;
             //FileName = null;
